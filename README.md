@@ -173,7 +173,13 @@ Grounded Response (Citations)
       └── Embeddable AI Agent / REST API
 ```
 
+### Production Considerations
 
+- **Hallucination reduction**: Multi-agent verification + self-correction forces every answer to be grounded in retrieved document chunks.
+- **Privacy**: Vector store runs locally (ChromaDB). Sensitive documents never leave the environment.
+- **Security**: FastAPI backend ready for API key authentication.
+- **Scalability**: Stateless FastAPI + Docker support. Easy to deploy behind a reverse proxy or load balancer.
+- **Observability**: Logging of retrieval steps and agent decisions for debugging and auditing.
 
 
 
