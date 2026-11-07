@@ -11,12 +11,6 @@ Connect your company data and your business systems. The agent fixes orders, iss
 
 *The demo shows three support cases: a replacement the agent handles on its own, a refund that waits for a person, and a request it hands off instead of guessing. Sample company and data.*
 
-[![Python](https://img.shields.io/badge/Python-3.10+-3776AB?style=flat&logo=python&logoColor=white)](https://www.python.org/)
-[![LangChain](https://img.shields.io/badge/LangChain-LangGraph-121011?style=flat)](https://www.langchain.com/)
-[![MCP](https://img.shields.io/badge/MCP-tool_use-f97316?style=flat)](https://modelcontextprotocol.io/)
-[![ChromaDB](https://img.shields.io/badge/ChromaDB-vector_search-FF6F00?style=flat)](https://www.trychroma.com/)
-[![FastAPI](https://img.shields.io/badge/FastAPI-API-009688?style=flat&logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com/)
-
 ---
 
 ## Contents
@@ -26,10 +20,11 @@ Connect your company data and your business systems. The agent fixes orders, iss
 - [How it works](#how-it-works)
 - [Safety by design](#safety-by-design)
 - [Use cases](#use-cases)
+- [Integrations](#integrations)
 - [Architecture](#architecture)
-- [Tech stack](#tech-stack)
-- [Getting started](#getting-started)
-- [Author](#author)
+- [What we measure](#what-we-measure)
+- [Run it](#run-it)
+- [Work with us](#work-with-us)
 
 ---
 
@@ -127,93 +122,79 @@ The agent is autonomous where it's safe and supervised where it matters.
 
 ---
 
+## Integrations
+
+The agent connects to business systems through MCP servers. Each one exposes a small set of tools, and you decide which ones the agent may call and which need approval.
+
+| System | Example tools | Typical rule |
+| :--- | :--- | :--- |
+| **Orders** | `get_order`, `create_replacement` | Automatic within policy |
+| **Inventory** | `check_stock` | Automatic |
+| **Payments** | `list_charges`, `refund` | Approval above your limit |
+| **Helpdesk** | `create_ticket` | Automatic handoff |
+| **CRM** | `lookup_customer` | Automatic |
+| **Channels** | `send_message` on WhatsApp, email and web chat | Automatic |
+
+---
+
 ## Architecture
 
 ```text
-Company data (PDFs, tickets, emails, transcripts, scans)
-        │
-        ▼
-Docling + OCR  →  cleaning and semantic chunking
-        │
-        ▼
-Hybrid index: BM25 + ChromaDB vectors
-        │
-        ▼
 Customer message (WhatsApp · Email · Web chat)
         │
         ▼
-Scope check  →  Research agent  →  Verification and self-correction
+Understand the request  →  identify the customer and the intent
         │
         ▼
-Tool use via MCP (orders · inventory · payments · helpdesk · crm)
-        │
-        ├── Low-risk action        →  executed automatically
-        ├── Above approval limit   →  waits for a person
-        └── No supporting policy   →  handoff ticket with full context
+Hybrid RAG over company data  →  find the policy that applies (with citation)
         │
         ▼
-Grounded reply with citation  +  audit log entry
+Tool use via MCP  →  orders · inventory · payments · helpdesk · crm
+        │
+        ├── Within policy, low risk    →  executed automatically
+        ├── Above approval limit       →  waits for a person
+        └── No supporting policy       →  handoff ticket with full context
+        │
+        ▼
+Grounded reply to the customer  +  audit log entry
 ```
 
-Key modules:
+Main modules:
 
 | Path | Purpose |
 | :--- | :--- |
-| `docchat/assistance_ai/graph/` | Agent graph, intent classification, decision policy, tool registry and response validation |
+| `docchat/assistance_ai/graph/` | Agent graph: intent, decision policy, tool registry and response validation |
 | `docchat/agentic_mcp_a2a_bridge.py` | MCP tool bridge |
-| `docchat/audit/` | Audit logging |
-| `app.py` | Web interface |
+| `docchat/audit/` | Audit trail |
 | `api_server.py` | REST API |
 
 ---
 
-## Tech stack
+## What we measure
 
-| Layer | Technologies |
-| :--- | :--- |
-| **Agents** | LangChain, LangGraph |
-| **Tools** | Model Context Protocol (MCP) |
-| **LLM** | OpenAI API |
-| **Retrieval** | Hybrid search: BM25 + ChromaDB vectors |
-| **Documents and OCR** | Docling, PyPDF2, pdf2image, pytesseract, Pillow |
-| **Backend** | FastAPI, Uvicorn, Pydantic |
-| **Interface** | Gradio, embeddable web widget |
-| **Deployment** | Docker, Docker Compose |
-| **Language** | Python 3.10+ |
+The goal is resolved requests, not deflected ones. Each conversation is tracked by outcome:
+
+- **Resolved end to end** by the agent
+- **Approved by a person** before an action ran
+- **Handed off** to a team, with context
+- **Every tool call** with its time, result and approver
 
 ---
 
-## Getting started
+## Run it
 
 ```bash
-# Clone the repository
 git clone https://github.com/santinogenta27/AI-Agents-for-Enterprise-Private-Data.git
 cd AI-Agents-for-Enterprise-Private-Data
-
-# Create and activate a virtual environment
-python -m venv .venv
-source .venv/bin/activate        # macOS / Linux
-.venv\Scripts\activate           # Windows
-
-# Install dependencies
-pip install -r requirements.txt
 ```
 
-Create a `.env` file in the project root:
+Create a `.env` file in the project root with your model key and the keys of the systems and channels you connect:
 
 ```env
 OPENAI_API_KEY=your_openai_api_key
 ```
 
-Add the API keys for the systems and channels you want to connect.
-
-Run the web interface:
-
-```bash
-python app.py
-```
-
-Or run it with Docker:
+Start it with Docker:
 
 ```bash
 docker compose up --build
@@ -221,11 +202,11 @@ docker compose up --build
 
 ---
 
-## Author
+## Work with us
 
-**Santino Genta**, Founder & AI Engineer · Buenos Aires · works remotely
+Tell us which requests take most of your team's time. We'll show you how the agent would resolve them with your data and your systems.
 
-I design AI agents for real business operations: multi-agent systems, enterprise RAG and MCP integrations, with human approval and an audit trail built in from day one.
+Built by **Santino Genta**, Founder & AI Engineer at Enterprise Data AI · Buenos Aires · works remotely. Multi-agent systems, enterprise RAG and MCP integrations, with human approval and an audit trail built in from day one.
 
 - Website: [enterprisedataai.com](https://www.enterprisedataai.com/)
 - WhatsApp: [+54 9 11 2849 2480](https://wa.me/5491128492480)
