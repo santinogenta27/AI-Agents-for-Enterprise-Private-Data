@@ -21,9 +21,7 @@ Connect your company data and your business systems. The agent fixes orders, iss
 - [Safety by design](#safety-by-design)
 - [Use cases](#use-cases)
 - [Integrations](#integrations)
-- [Architecture](#architecture)
 - [What we measure](#what-we-measure)
-- [Run it](#run-it)
 - [Work with us](#work-with-us)
 
 ---
@@ -137,39 +135,6 @@ The agent connects to business systems through MCP servers. Each one exposes a s
 
 ---
 
-## Architecture
-
-```text
-Customer message (WhatsApp · Email · Web chat)
-        │
-        ▼
-Understand the request  →  identify the customer and the intent
-        │
-        ▼
-Hybrid RAG over company data  →  find the policy that applies (with citation)
-        │
-        ▼
-Tool use via MCP  →  orders · inventory · payments · helpdesk · crm
-        │
-        ├── Within policy, low risk    →  executed automatically
-        ├── Above approval limit       →  waits for a person
-        └── No supporting policy       →  handoff ticket with full context
-        │
-        ▼
-Grounded reply to the customer  +  audit log entry
-```
-
-Main modules:
-
-| Path | Purpose |
-| :--- | :--- |
-| `docchat/assistance_ai/graph/` | Agent graph: intent, decision policy, tool registry and response validation |
-| `docchat/agentic_mcp_a2a_bridge.py` | MCP tool bridge |
-| `docchat/audit/` | Audit trail |
-| `api_server.py` | REST API |
-
----
-
 ## What we measure
 
 The goal is resolved requests, not deflected ones. Each conversation is tracked by outcome:
@@ -178,27 +143,6 @@ The goal is resolved requests, not deflected ones. Each conversation is tracked 
 - **Approved by a person** before an action ran
 - **Handed off** to a team, with context
 - **Every tool call** with its time, result and approver
-
----
-
-## Run it
-
-```bash
-git clone https://github.com/santinogenta27/AI-Agents-for-Enterprise-Private-Data.git
-cd AI-Agents-for-Enterprise-Private-Data
-```
-
-Create a `.env` file in the project root with your model key and the keys of the systems and channels you connect:
-
-```env
-OPENAI_API_KEY=your_openai_api_key
-```
-
-Start it with Docker:
-
-```bash
-docker compose up --build
-```
 
 ---
 
