@@ -1,308 +1,203 @@
-# DocChat Enterprise
+# Enterprise Data AI
 
-### Enterprise Multi-Agent AI Platform for Sales, Customer Support & Internal Knowledge Management
+### AI customer support agents that resolve requests, not just answer them.
 
-[![Live Demo Website](https://img.shields.io/badge/🚀_LIVE_DEMO_WEBSITE-enterprisedataai.com-blue?style=for-the-badge)](https://www.enterprisedataai.com/)
-[![Watch Demo Video](https://img.shields.io/badge/▶️_WATCH_DEMO_VIDEO-YouTube-red?style=for-the-badge)](https://www.youtube.com/watch?v=wBtSqWNyFdI)
+Connect your company data and your business systems. The agent fixes orders, issues refunds with human approval and hands off to your team with full context, on WhatsApp, email and web chat. Every action is logged.
 
-> 🎥 **Click the video thumbnail below or [this link](https://www.youtube.com/watch?v=wBtSqWNyFdI) to watch the Full Video Demo on YouTube.**
+[![Website](https://img.shields.io/badge/Website-enterprisedataai.com-f97316?style=for-the-badge)](https://www.enterprisedataai.com/)
+[![Watch the demo](https://img.shields.io/badge/Watch_the_demo-54_seconds-111111?style=for-the-badge)](https://www.enterprisedataai.com/#demo)
 
-[![DocChat Enterprise Demo](https://img.youtube.com/vi/wBtSqWNyFdI/maxresdefault.jpg)](https://www.youtube.com/watch?v=wBtSqWNyFdI)
+[![Enterprise Data AI demo: an AI support agent resolving a damaged-order request with tool calls](docs/assets/demo-thumbnail.jpg)](https://www.enterprisedataai.com/#demo)
+
+*The demo shows three support cases: a replacement the agent handles on its own, a refund that waits for a person, and a request it hands off instead of guessing. Sample company and data.*
 
 [![Python](https://img.shields.io/badge/Python-3.10+-3776AB?style=flat&logo=python&logoColor=white)](https://www.python.org/)
-[![FastAPI](https://img.shields.io/badge/FastAPI-0.100+-009688?style=flat&logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com/)
-[![LangChain](https://img.shields.io/badge/LangChain-Framework-121011?style=flat&logo=chainlink&logoColor=white)](https://www.langchain.com/)
-[![OpenAI](https://img.shields.io/badge/OpenAI-API-412991?style=flat&logo=openai&logoColor=white)](https://openai.com/)
-[![ChromaDB](https://img.shields.io/badge/ChromaDB-Vector_DB-FF6F00?style=flat)](https://www.trychroma.com/)
-
-
-
-
-**Demo Workflow:** The current public demonstration showcases **Alien Mode**, the main end-to-end workflow of the platform, including document upload, knowledge extraction, conversational AI, and an embeddable AI widget.
-
-Additional modules included in the repository explore advanced AI workflows, enterprise automation patterns, and prototype integrations under continuous development.
-
-> 🌐 **Language Note:** The public demo UI is currently configured in Spanish. Non-Spanish speakers can easily review the full application flow by enabling their browser's built-in translation (e.g., Chrome Google Translate).
-
-## 📌 Table of Contents
-- [Overview](#-overview)
-- [Why DocChat Enterprise?](#-why-docchat-enterprise)
-- [Core Platform Capabilities](#-core-platform-capabilities)
-- [Key Features](#-key-features)
-- [How It Works](#️-how-it-works-end-to-end-architecture-flow)
-- [Enterprise AI Agents](#-enterprise-ai-agents)
-- [Agentic & Multi-Agent Architecture](#-agentic--multi-agent-architecture)
-- [Tech Stack](#️-tech-stack)
-- [Supported Documents](#-supported-documents)
-- [Real-World Use Cases](#-real-world-use-cases--applications)
-- [Installation](#Installation)
-
-## 💡 Overview
-
-DocChat Enterprise is a production-oriented Enterprise AI platform that transforms large collections of private documents into intelligent AI Agents capable of answering complex questions, generating cross-document summaries, and providing grounded responses for employees and customers.
-
-The platform combines Retrieval-Augmented Generation (RAG), OCR document processing, vector search, LangChain orchestration, and modern LLMs to create reliable enterprise knowledge assistants while reducing hallucinations through context-grounded generation.
+[![LangChain](https://img.shields.io/badge/LangChain-LangGraph-121011?style=flat)](https://www.langchain.com/)
+[![MCP](https://img.shields.io/badge/MCP-tool_use-f97316?style=flat)](https://modelcontextprotocol.io/)
+[![ChromaDB](https://img.shields.io/badge/ChromaDB-vector_search-FF6F00?style=flat)](https://www.trychroma.com/)
+[![FastAPI](https://img.shields.io/badge/FastAPI-API-009688?style=flat&logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com/)
 
 ---
 
-## ❓ Why DocChat Enterprise?
+## Contents
 
-Unlike traditional PDF chatbots, DocChat Enterprise is designed to operate as a production-oriented enterprise document intelligence platform. 
-
-It combines document parsing, OCR, Retrieval-Augmented Generation (RAG), semantic search, and AI-powered agents into a single workflow capable of serving both internal employees and external customers.
-
----
-
-## 🚀 Core Platform Capabilities
-
-- **Multi-Document Ingestion (100+ PDFs):** Ingest and index hundreds of corporate PDFs into a unified knowledge base.
-- **Cross-Document Semantic Search:** Query across multiple documents simultaneously with precise vector-based retrieval.
-- **AI-Powered Document Summarization:** Generate instant high-level summaries and analytical synthesis across extensive PDF collections.
-- **Context-Grounded RAG Pipeline:** Minimizes hallucinations by strictly anchoring LLM responses to extracted context chunks.
-- **OCR Document Processing:** Extract structured text and tables from scanned documents, legacy files, and complex layouts.
-- **Embeddable AI Agent:** Lightweight, ready-to-deploy web agent for external websites and customer touchpoints.
-- **Enterprise REST API:** Scalable FastAPI backend to serve internal workflows, microservices, and external client applications.
+- [Why it matters](#why-it-matters)
+- [What the agent does](#what-the-agent-does)
+- [How it works](#how-it-works)
+- [Safety by design](#safety-by-design)
+- [Use cases](#use-cases)
+- [Architecture](#architecture)
+- [Tech stack](#tech-stack)
+- [Getting started](#getting-started)
+- [Author](#author)
 
 ---
 
-## ⚡ Key Features
+## Why it matters
 
-### 📄 Advanced Document Ingestion & RAG
-- **Massive Multi-Document Ingestion:** Ingest and index 100+ PDFs into a single, structured enterprise knowledge base.
-- **Advanced RAG Pipeline:** Context-aware retrieval and semantic search tailored for complex enterprise documentation.
-- **Enterprise Document Summarization:** Generate instant summaries and cross-document analysis across extensive PDF collections.
-- **OCR & Layout Processing:** Extract text and tables from scanned documents and complex layouts using Docling + OCR.
+Most support bots stop at a reply and leave the work to your team. Customers judge a company on whether the problem got fixed.
 
-### 🤖 AI Capabilities & Assistant Modes
-- **Embeddable AI Agent:** Deploy a lightweight assistant on any website to handle visitor queries 24/7 using product documentation via OpenAI.
-- **Internal Knowledge Assistant:** Gives employees immediate access to company SOPs, policies, and internal technical guides.
-- **Context-Grounded QA:** Minimizes hallucinations by strictly anchoring LLM answers to extracted document chunks.
-
-### 🔌 Tech Integration & Security
-- **LangChain & OpenAI Framework:** Clean orchestration for document loading, semantic chunking, and question-answering chains.
-- **Vector Search Indexing:** Fast similarity search powered by ChromaDB for accurate chunk retrieval.
-- **Data Privacy & Security:** Local vector indexing ensuring sensitive company knowledge remains private and controlled.
-
-## ⚙️ How It Works (End-to-End Architecture Flow)
-
-1. **Document Ingestion & OCR:** PDFs (100+ files) are uploaded and processed using Docling and Tesseract OCR to extract raw text, tables, and document structural layout.
-2. **Chunking & Vector Embedding:** Extracted text is split into semantic chunks and stored in ChromaDB for high-accuracy similarity search.
-3. **Context Retrieval & RAG Chain:** When a user submits a query, LangChain searches ChromaDB to retrieve the most relevant document chunks based on semantic similarity.
-4. **LLM Synthesis & Citation:** Retrieved text chunks and the user prompt are sent to the OpenAI API to generate accurate, context-grounded responses with minimal hallucination.
-5. **Multi-Channel Delivery:** Answers are delivered directly through the main Gradio interface or served to site visitors live via the embeddable Web Widget.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-## 🤖 Enterprise AI Agents
-
-DocChat Enterprise is structured around specialized agent workflows to target distinct operational environments:
-
-### 🏢 Internal Knowledge Assistant
-Allows employees to query internal documentation, operational procedures, HR policies, SOPs, and technical manuals instantly.
+| Typical chatbot | Enterprise Data AI agent |
+| :--- | :--- |
+| Answers from a FAQ and can't touch your systems | Looks up orders and payments and makes the change |
+| Guesses when the answer isn't in its data | Cites the policy it used, and hands off when there isn't one |
+| Escalates without context, so customers repeat themselves | Passes your team a summary and the customer's history |
+| No record of what it did or why | Logs every action, approval and handoff |
 
 ---
 
-### 🎧 Customer Support AI Agent
-Provides instant 24/7 grounded responses to customer inquiries directly on external websites using uploaded documentation.
+## What the agent does
+
+- **Resolves end to end.** Checks the order, the policy and the stock, then makes the change and confirms it with the customer.
+- **Answers with the source.** Uses hybrid RAG over your company data and shows the policy behind every answer.
+- **Asks before risky actions.** Refunds above the limit you set wait for a person to approve them. Nothing moves until they do.
+- **Hands off with context.** When there's no policy, it doesn't guess. It opens a ticket with a summary and the customer's history.
+- **Logs every action.** A full audit trail shows each action, whether it ran automatically, who approved it and what was handed off.
+- **One agent, every channel.** The same agent works on WhatsApp, email and web chat, with the same knowledge and the same rules.
 
 ---
 
-### 💼 Sales AI Agent
-Answers pricing, product features, and technical specification questions using enterprise documentation to accelerate sales cycles.
+## How it works
 
----
+### 1. Connect your company data
 
+Policies, tickets, emails, call transcripts and scanned documents become searchable with hybrid RAG (BM25 keyword search plus vector search). Every answer points to its source.
 
+`PDF` · `Support tickets` · `Emails` · `Call transcripts` · `Slack threads` · `Scans (OCR)`
 
+### 2. Connect your systems through MCP
 
+The agent reads and acts in your business systems through MCP servers: it can look up an order, create a replacement or open a ticket. You choose which tools it can use.
 
+`orders` · `inventory` · `payments` · `helpdesk` · `crm`
 
+### 3. Go live where customers write
 
+One agent serves every channel with the same knowledge, the same rules and one audit trail.
 
+`WhatsApp` · `Email` · `Web chat`
 
-
-
-
-
-
-
-
-## 🔄 Agentic & Multi-Agent Architecture
+### Example: a damaged order
 
 ```text
-PDF Upload
-      │
-      ▼
-Docling + OCR (Tesseract)
-      │
-      ▼
-Markdown Extraction & Cleaning
-      │
-      ▼
-Semantic Chunking
-      │
-      ▼
-Hybrid Search Index (BM25 + ChromaDB Vector)
-      │
-      ▼
-Scope Checker Agent
-      │
-      ▼
-Research Agent
-      │
-      ▼
-Verification Agent & Self-Correction
-      │
-      ▼
-Grounded Response (Citations)
-      ├── Gradio Web Interface
-      └── Embeddable AI Agent / REST API
+Customer (WhatsApp): "Hi! My order #4821 arrived broken. Can you send me a new one?"
+
+orders.get_order("4821")              → Ceramic lamp · delivered Nov 4 · $89.00
+docs.search("damaged item")           → Returns Policy §3 · free replacement within 30 days
+inventory.check_stock("LMP-204")      → 12 in stock
+orders.create_replacement("4821")     → New order #4907 · ships today
+whatsapp.send_message(tracking)       → Tracking link sent
+
+Agent: "Sorry about that, Ana! I've sent you a free replacement, order #4907.
+        It ships today and arrives Thursday."   [Returns Policy · §3]
 ```
 
-### Production Considerations
+---
 
-- **Hallucination reduction**: Multi-agent verification + self-correction forces every answer to be grounded in retrieved document chunks.
-- **Privacy**: Vector store runs locally (ChromaDB). Sensitive documents never leave the environment.
-- **Security**: FastAPI backend ready for API key authentication.
-- **Scalability**: Stateless FastAPI + Docker support. Easy to deploy behind a reverse proxy or load balancer.
-- **Observability**: Logging of retrieval steps and agent decisions for debugging and auditing.
+## Safety by design
 
+The agent is autonomous where it's safe and supervised where it matters.
 
+- **Approval limits you set.** For example, refunds above $200 always go to a person first.
+- **No source, no guess.** If your data has no answer, the agent hands the case to your team.
+- **Full audit trail.** Every tool call is recorded with its time, its result and who approved it.
 
+```text
+10:02:12  orders.get_order 4821               auto
+10:02:14  orders.create_replacement #4907     auto
+10:02:15  whatsapp.send_message tracking      auto
+10:05:38  docs.search · Billing Policy §2     auto
+10:05:41  payments.refund $480.00             approved · Maria
+10:12:25  crm.lookup_customer                 auto
+10:12:27  helpdesk.create_ticket #1132        handoff · Sales
+```
 
+*Sample data from the demo.*
 
+---
 
+## Use cases
 
-## 🛠️ Tech Stack
+| Request | What the agent does |
+| :--- | :--- |
+| **Order problems**: *"My order arrived broken."* | Checks the order and the policy, then creates the replacement. |
+| **Billing and refunds**: *"I was charged twice."* | Finds the duplicate charge and prepares the refund, with approval above your limit. |
+| **Policy and product questions**: *"Is this still under warranty?"* | Answers from your own documents, with the source attached. |
+| **Escalations**: *"Can I get a volume discount?"* | Routes the request to the right team with full context. |
+
+---
+
+## Architecture
+
+```text
+Company data (PDFs, tickets, emails, transcripts, scans)
+        │
+        ▼
+Docling + OCR  →  cleaning and semantic chunking
+        │
+        ▼
+Hybrid index: BM25 + ChromaDB vectors
+        │
+        ▼
+Customer message (WhatsApp · Email · Web chat)
+        │
+        ▼
+Scope check  →  Research agent  →  Verification and self-correction
+        │
+        ▼
+Tool use via MCP (orders · inventory · payments · helpdesk · crm)
+        │
+        ├── Low-risk action        →  executed automatically
+        ├── Above approval limit   →  waits for a person
+        └── No supporting policy   →  handoff ticket with full context
+        │
+        ▼
+Grounded reply with citation  +  audit log entry
+```
+
+Key modules:
+
+| Path | Purpose |
+| :--- | :--- |
+| `docchat/assistance_ai/graph/` | Agent graph, intent classification, decision policy, tool registry and response validation |
+| `docchat/agentic_mcp_a2a_bridge.py` | MCP tool bridge |
+| `docchat/audit/` | Audit logging |
+| `app.py` | Web interface |
+| `api_server.py` | REST API |
+
+---
+
+## Tech stack
 
 | Layer | Technologies |
 | :--- | :--- |
-| **AI Framework** | LangChain |
-| **LLM Provider** | OpenAI API |
-| **Vector Database** | ChromaDB |
-| **Document Parsing & OCR** | Docling, PyPDF2, pdf2image, pytesseract, Pillow |
-| **Backend API** | FastAPI, Uvicorn, Pydantic |
-| **User Interface** | Gradio |
-| **Programming Language** | Python 3.10+ |
-
-
-
-
-
-
-
-
-
-
-## 📄 Supported Documents
-
-The platform is designed to process and index a wide variety of corporate document formats and structures:
-
-- **Legal:** Contracts, NDAs, Terms of Service, Compliance Guidelines
-- **Operations:** SOPs, Internal Policies, Employee Handbooks
-- **Product:** User Manuals, Technical Specifications, Battlecards
-- **Research & Finance:** Financial Reports, Audit Documents, Research Papers
-- **Support:** FAQ Bases, Troubleshooting Guides, Service Catalogs
-
-### 🌍 Real-World Use Cases & Applications
-
-DocChat Enterprise can be integrated across a wide variety of industries and operational workflows to solve complex document-handling challenges:
-
-### 1. E-Commerce & Retail
-
-* **24/7 Customer Support (via Embeddable Widget):** Instantly answer buyer inquiries regarding shipping policies, return guidelines, warranties, or size charts using uploaded product PDFs.
-* **Complex Product Assistance:** Help customers navigate extensive catalogs, technical specifications, or assembly manuals directly from the storefront website.
-
-### 2. Internal Knowledge Management & HR
-
-* **Employee Onboarding & Training:** Allow new hires to ask natural-language questions about company policies, internal benefits, organizational culture, and employee handbooks.
-* **Instant SOP Search (Standard Operating Procedures):** Help employees resolve operational doubts in seconds without manually reading hundreds of pages of internal documentation.
-* **Unified Corporate Assistant:** Serve as a single, centralized entry point for day-to-day administrative and operational queries across the company intranet.
-
-### 3. Legal, Compliance & Auditing
-
-* **Mass Contract Analysis:** Ingest dozens or hundreds of legal PDFs to quickly extract key clauses, expiration dates, or specific compliance conditions.
-* **Regulatory Compliance Checking:** Verify whether internal procedures or company documents align with local and international legal frameworks.
-* **Executive Summaries:** Generate concise, high-level summaries of complex legal filings and extensive audit reports for faster decision-making.
-
-### 4. Finance, Banking & Accounting
-
-* **Financial Report Analysis:** Extract, analyze, and compare financial metrics, corporate balances, and annual reports hidden within large volumes of PDF documentation.
-* **Credit & Risk Policy Consulting:** Help analysts instantly check current rules, thresholds, and requirements for credit approvals and financial investments.
-
-### 5. IT, Software Engineering & Technical Support
-
-* **Rapid Incident Resolution:** Query software architecture guides, server documentation, and technical manuals to troubleshoot errors faster.
-* **Technical Spec Libraries:** Allow engineers to cross-reference technical requirements and legacy project specifications without manual documentation scanning.
-
-### 6. Healthcare & Pharmaceuticals
-
-* **Clinical Trials & Medical Reference:** Search quickly through medical literature, clinical trials, drug monographs, and treatment guidelines.
-* **Secure Protocol Access:** Ensure medical staff have private, instant access to up-to-date hospital protocols and clinical care procedures.
-
-### 7. Education & Academic Portals
-
-* **Virtual Research Tutor:** Enable students and researchers to upload multiple textbooks, theses, or scientific papers to ask direct questions or generate chapter summaries.
-* **University Web Assistant:** Embed the widget on educational portals to handle student inquiries regarding syllabi, academic calendars, and enrollment processes.
-
-### 8. Sales, Marketing & B2B
-
-* **RFP & Tender Response Preparation:** Sales teams can quickly extract technical answers and past project details to draft competitive proposals under tight deadlines.
-* **Sales Enablement:** Provide sales reps with instant access to brand guidelines, product battlecards, and feature comparisons during client interactions.
+| **Agents** | LangChain, LangGraph |
+| **Tools** | Model Context Protocol (MCP) |
+| **LLM** | OpenAI API |
+| **Retrieval** | Hybrid search: BM25 + ChromaDB vectors |
+| **Documents and OCR** | Docling, PyPDF2, pdf2image, pytesseract, Pillow |
+| **Backend** | FastAPI, Uvicorn, Pydantic |
+| **Interface** | Gradio, embeddable web widget |
+| **Deployment** | Docker, Docker Compose |
+| **Language** | Python 3.10+ |
 
 ---
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-## Getting Started
-
-## Installation
+## Getting started
 
 ```bash
 # Clone the repository
-git clone https://github.com/santinogenta27/DocChatEnterprise.git
-cd DocChatEnterprise
+git clone https://github.com/santinogenta27/AI-Agents-for-Enterprise-Private-Data.git
+cd AI-Agents-for-Enterprise-Private-Data
 
-# Create a virtual environment
+# Create and activate a virtual environment
 python -m venv .venv
-
-# Activate it
-# Windows
-.venv\Scripts\activate
-
-# macOS / Linux
-source .venv/bin/activate
+source .venv/bin/activate        # macOS / Linux
+.venv\Scripts\activate           # Windows
 
 # Install dependencies
 pip install -r requirements.txt
 ```
-
-## Environment Variables
 
 Create a `.env` file in the project root:
 
@@ -310,10 +205,28 @@ Create a `.env` file in the project root:
 OPENAI_API_KEY=your_openai_api_key
 ```
 
-Add any additional API keys required for the features you want to use.
+Add the API keys for the systems and channels you want to connect.
 
-## Run
+Run the web interface:
 
 ```bash
 python app.py
 ```
+
+Or run it with Docker:
+
+```bash
+docker compose up --build
+```
+
+---
+
+## Author
+
+**Santino Genta**, Founder & AI Engineer · Buenos Aires · works remotely
+
+I design AI agents for real business operations: multi-agent systems, enterprise RAG and MCP integrations, with human approval and an audit trail built in from day one.
+
+- Website: [enterprisedataai.com](https://www.enterprisedataai.com/)
+- WhatsApp: [+54 9 11 2849 2480](https://wa.me/5491128492480)
+- Email: [enterprisedataai@gmail.com](mailto:enterprisedataai@gmail.com)
